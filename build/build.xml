@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<project name="MUC Plugin" default="all" basedir="..">
+    <description>
+        Plugin build script.
+    </description>
+	
+	<property name="crossfire.lib.dir" value="${basedir}/../crossfire/target/crossfire/lib"/>
+	
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="work.dir" value="${basedir}/work"/>
+   	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="target.dir" value="${basedir}/target"/>
+	
+    <path id="compile.dependencies">
+        <fileset dir="${lib.dir}" includes="*.jar" excludes="junit.jar"/>
+    	<fileset dir="${crossfire.lib.dir}" includes="crossfire.jar"/>
+    </path>
+
+	<path id="jspc.dependencies">
+		<path refid="compile.dependencies"/>
+	</path>
+			
+	<target name="clean">
+		<delete dir="${work.dir}"/>
+		<delete dir="${target.dir}"/>
+	</target>
+			
+	<target name="compile">
+		<mkdir dir="${work.dir}/classes"/>
+		<javac 
+			destdir="${work.dir}/classes"
+			includeAntRuntime="no"
+			debug="on"
+			source="1.5"
+			target="1.5"
+			>
+			<src path="${src.dir}/java"/>
+			<classpath>
+				<path refid="compile.dependencies"/>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar-java" depends="compile">
+		<mkdir dir="${work.dir}/jar"/>
+		<jar jarfile="${work.dir}/jar/lib/plugin-muc.jar">
+			<fileset dir="${work.dir}/classes"/>
+		</jar>		
+	</target>
+		
+	<target name="jspc" depends="jar-java">
+		<mkdir dir="${work.dir}/jspc/classes"/>
+		<mkdir dir="${work.dir}/jspc/java"/>
+		
+		<taskdef classname="org.apache.jasper.JspC" name="jasper2" loaderref="jasperB">
+			<classpath>
+				<pathelement location="${java.home}/../lib/tools.jar"/>
+				<pathelement location="${work.dir}/jar/lib/plugin-muc.jar"/>
+				<path refid="jspc.dependencies"/>
+			</classpath>
+		</taskdef>	
+		
+		<jasper2
+				validateXml="false"
+				uriroot="${src.dir}/web"
+				outputDir="${work.dir}/jspc/java"
+				package="net.emiva.crossfire.plugin.muc"
+				webXml="${work.dir}/jspc/web.xml"
+		/>
+		
+		<javac
+			destdir="${work.dir}/jspc/classes"
+			includeAntRuntime="no"
+			debug="on"
+			source="1.5"
+			target="1.5"
+		>
+			<src path="${work.dir}/jspc/java"/>
+			<classpath>
+				<path refid="jspc.dependencies"/>
+				<pathelement path="${compile.dir}"/>
+				<pathelement location="${work.dir}/jar/lib/plugin-muc.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="jar-jsp" depends="jspc">
+		<mkdir dir="${work.dir}/jar/lib"/>
+		<jar jarfile="${work.dir}/jar/lib/plugin-muc-jsp.jar">
+			<fileset dir="${work.dir}/jspc/classes" includes="**/*"/>
+		</jar>		
+	</target>
+
+	<target name="build-plugin" depends="jar-jsp">
+		<mkdir dir="${work.dir}/jar/web/WEB-INF"/>
+		<copy todir="${work.dir}/jar/web/WEB-INF">
+			<fileset dir="${work.dir}/jspc" includes="web.xml"/>
+		</copy>		
+		<copy todir="${work.dir}/jar">
+			<fileset dir="${src.dir}/resource" includes="**/*"/>
+		</copy>
+		<copy todir="${work.dir}/jar/i18n">
+			<fileset dir="${src.dir}/i18n" includes="**/*"/>
+		</copy>
+		<jar jarfile="${target.dir}/muc.jar">
+			<fileset dir="${work.dir}/jar" includes="**/*"/>
+		</jar>
+	</target>
+
+	<target name="all" depends="build-plugin"/>
+</project>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+    <class>net.emiva.crossfire.plugin.muc.MUCPlugin</class>
+    <name>muc</name>
+    <description>Provides support for multi-user chat</description>
+    <author>Brian Bintz (Enterprise Management, Inc)</author>
+    <version>0.0.1</version>
+    <date>03/02/2012</date>
+    <minServerVersion>3.7.0</minServerVersion>
+    <adminconsole>
+    <!-- Group Chat -->
+    <tab id="tab-plugin-muc" name="${tab.tab-groupchat}" url="muc-room-summary.jsp"
+         description="${tab.tab-groupchat.descr}">
+
+        <!-- Room Administration -->
+        <sidebar id="sidebar-plugin-muc-administration" name="${sidebar.sidebar-groupchat-administration}">
+            <!-- Room Summary -->
+            <item id="plugin-muc-room-summary" name="${sidebar.muc-room-summary}"
+                  url="muc-room-summary.jsp"
+                  description="${sidebar.muc-room-summary.descr}">
+
+                <!-- Room Options -->
+                <sidebar id="sidebar-plugin-muc-options" name="${sidebar.sidebar-groupchat-options}">
+
+                    <!-- Room Settings -->
+                    <item id="plugin-muc-room-edit-form" name="${sidebar.muc-room-edit-form}"
+                          url="muc-room-edit-form.jsp"
+                          description="${sidebar.muc-room-edit-form.descr}"/>
+
+                    <!-- Room Occupants -->
+                    <item id="plugin-muc-room-occupants" name="${sidebar.muc-room-occupants}"
+                          url="muc-room-occupants.jsp"
+                          description="${sidebar.muc-room-occupants.descr}"/>
+
+                    <!-- User Permissions -->
+                    <item id="plugin-muc-room-affiliations" name="${sidebar.muc-room-affiliations}"
+                          url="muc-room-affiliations.jsp"
+                          description="${sidebar.muc-room-affiliations.descr}"/>
+
+                    <!-- Delete Room -->
+                    <item id="plugin-muc-room-delete" name="${sidebar.muc-room-delete}"
+                          url="muc-room-delete.jsp"
+                          description="${sidebar.muc-room-delete.descr}"/>
+                </sidebar>
+            </item>
+
+            <!-- Create New Room -->
+            <item id="plugin-muc-room-create" name="${sidebar.muc-room-create}"
+                  url="muc-room-create.jsp"
+                  description="${sidebar.muc-room-create.descr}"/>
+        </sidebar>
+
+        <!-- Group Chat Settings -->
+        <sidebar id="sidebar-plugin-muc-settings" name="${sidebar.sidebar-groupchat-settings}">
+            <!-- Group Chat Service Summary -->
+            <item id="plugin-muc-service-summary" name="${sidebar.muc-service-summary}"
+                  url="muc-service-summary.jsp"
+                  description="${sidebar.muc-service-summary.descr}">
+
+                <!-- Service Options -->
+                <sidebar id="sidebar-plugin-muc-service-options" name="${sidebar.sidebar-muc-service-options}">
+
+                    <!-- Service Properties -->
+                    <item id="plugin-muc-service-edit-form" name="${sidebar.muc-server-props}"
+                          url="muc-service-edit-form.jsp"
+                          description="${sidebar.muc-server-props.descr}"/>
+
+                    <!-- Service History Settings -->
+                    <item id="plugin-muc-history" name="${sidebar.muc-history}"
+                          url="muc-history-settings.jsp"
+                          description="${sidebar.muc-history.descr}"/>
+
+                    <!-- Service Administrators -->
+                    <item id="plugin-muc-sysadmin" name="${sidebar.muc-sysadmin}"
+                          url="muc-sysadmins.jsp"
+                          description="${sidebar.muc-sysadmin.descr}"/>
+
+                    <!-- Service Room Creation Permissions -->
+                    <item id="plugin-muc-perms" name="${sidebar.muc-perms}"
+                          url="muc-create-permission.jsp"
+                          description="${sidebar.muc-perms.descr}"/>
+
+                    <!-- Service Room Default Settings -->
+                    <item id="plugin-muc-defaultsettings" name="${sidebar.muc-defaultsettings}"
+                          url="muc-default-settings.jsp"
+                          description="${sidebar.muc-defaultsettings.descr}"/>
+
+                    <!-- Service Other Settings -->
+                    <item id="plugin-muc-tasks" name="${sidebar.muc-tasks}"
+                          url="muc-tasks.jsp"
+                          description="${sidebar.muc-tasks.descr}"/>
+
+                    <!-- Delete Service -->
+                    <item id="plugin-muc-service-delete" name="${sidebar.muc-service-delete}"
+                          url="muc-service-delete.jsp"
+                          description="${sidebar.muc-service-delete.descr}"/>
+                </sidebar>
+            </item>
+
+            <!-- Create New MUC Service -->
+            <item id="plugin-muc-service-create" name="${sidebar.muc-service-create}"
+                  url="muc-service-create.jsp"
+                  description="${sidebar.muc-service-create.descr}"/>
+        </sidebar>
+    </tab>
+    </adminconsole>
+</plugin>
